@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Imari Jane Gueco | Portfolio</title>
+
+<style>
+/* ===== GENERAL ===== */
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{background:linear-gradient(135deg,#0f172a,#1e293b);color:#e5e7eb;overflow-x:hidden;}
+html {scroll-behavior: smooth;}
+
+* {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+/* ===== HAMBURGER BUTTON ===== */
+.menu-btn{
+position:fixed;top:20px;left:20px;font-size:28px;background:#1e293b;
+padding:10px 14px;border-radius:10px;cursor:pointer;z-index:1001;
+box-shadow:0 5px 15px rgba(0,0,0,0.5);
+}
+#menu-toggle{display:none;}
+
+/* ===== CONTACT DESIGN ===== */
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.contact-box {
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  padding: 25px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  transition: 0.3s;
+}
+
+.contact-box:hover {
+  transform: translateY(-8px);
+  background: linear-gradient(135deg, #06b6d4, #3b82f6);
+  color: white;
+}
+
+.contact-icon {
+  font-size: 32px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.contact-box h3 {
+  margin-bottom: 8px;
+  font-size: 18px;
+}
+
+.contact-box p {
+  font-size: 14px;
+  color: #cbd5f5;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar{
+width:270px;height:100vh;position:fixed;left:-270px;top:0;
+background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);
+border-right:1px solid rgba(255,255,255,0.1);
+padding:40px 20px;display:flex;flex-direction:column;
+align-items:center;transition:0.4s;z-index:1000;
+}
+#menu-toggle:checked ~ .sidebar{left:0;}
+
+/* ===== MAIN CONTENT ===== */
+.main-content{padding:50px;transition:0.4s;}
+#menu-toggle:checked ~ .main-content{margin-left:270px;}
+
+/* ===== SIDEBAR PROFILE ===== */
+.sidebar img{
+width:140px;height:140px;border-radius:50%;
+object-fit:cover;border:4px solid #60a5fa;margin-bottom:15px;
+}
+.sidebar h2{color:#f1f5f9;font-size:22px;margin-bottom:5px;text-align:center;}
+.sidebar p{color:#94a3b8;font-size:14px;margin-bottom:30px;}
+
+/* ===== NAVIGATION ===== */
+.sidebar nav{width:100%;display:flex;flex-direction:column;gap:15px;}
+.sidebar nav a{
+text-decoration:none;color:#e5e7eb;padding:12px 15px;
+border-radius:12px;font-size:15px;background:rgba(255,255,255,0.05);
+transition:0.3s;
+}
+.sidebar nav a:hover{
+background:rgba(34,114,211,0.3);color:white;transform:translateX(6px);
+}
+
+/* ===== HEADER ===== */
+.header{
+text-align:center;font-size:48px;font-weight:bold;
+letter-spacing:3px;margin-bottom:50px;
+background:linear-gradient(90deg,#60a5fa,#a78bfa);
+-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.header::after{
+content:"";width:120px;height:5px;
+background:linear-gradient(90deg,#60a5fa,#a78bfa);
+display:block;margin:15px auto 0;border-radius:5px;
+}
+
+/* ===== SECTIONS ===== */
+section{margin-bottom:70px;}
+.section-card{
+padding:50px;border-radius:20px;background:#1e293b;
+box-shadow:0 15px 40px rgba(0,0,0,0.6);
+}
+.section-card h1{margin-bottom:20px;}
+
+/* ===== EDUCATION ===== */
+#education ul li{
+background:linear-gradient(135deg,#1e293b,#0f172a);
+margin:12px 0;padding:15px 18px;border-radius:15px;
+box-shadow:0 10px 20px rgba(0,0,0,0.4);
+transition:0.3s;color:#e5e7eb;font-weight:500;
+}
+#education ul li:hover{
+background:linear-gradient(135deg,#10b981,#3b82f6);
+transform:translateY(-6px);color:white;
+}
+
+/* ===== PROJECTS ===== */
+.project-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:25px;margin-top:20px;
+}
+.project-card{
+background:linear-gradient(135deg,#1e293b,#0f172a);
+padding:25px;border-radius:18px;text-align:center;
+box-shadow:0 10px 25px rgba(0,0,0,0.5);transition:0.3s;
+}
+.project-card h3{color:#38bdf8;margin-bottom:10px;}
+.project-card p{font-size:14px;margin-bottom:20px;color:#cbd5f5;}
+.project-card:hover{
+transform:translateY(-10px);
+background:linear-gradient(135deg,#0ea5e9,#2563eb);
+color:white;
+}
+
+.btn-group{display:flex;justify-content:center;gap:10px;}
+.task-btn{
+padding:10px 16px;background:#38bdf8;color:#0f172a;
+border-radius:10px;text-decoration:none;font-size:14px;
+font-weight:bold;transition:0.3s;
+}
+.task-btn:hover{background:#0ea5e9;color:white;}
+
+/* ===== HIDE ALL TASK OUTPUTS AND CODES BY DEFAULT ===== */
+.task-output, .task-code {display:none;padding:50px;}
+.task-output:target, .task-code:target {display:block;}
+
+/* ===== SKILLS ===== */
+.skills-grid{
+display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+gap:20px;margin-top:20px;
+}
+.skill-box{
+background:#0f172a;padding:20px;border-radius:15px;
+text-align:center;font-weight:bold;
+}
+.skill-box:hover {
+  background: linear-gradient(135deg, #8059da, #030434); /* violet to blue */
+  color: white;
+  transform: translateY(-5px);
+  transition: 0.3s;
+}
+
+
+/* ===== HOBBIES ===== */
+.hobbies-grid{
+display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:20px;margin-top:20px;
+}
+.hobby-box{
+background:#0f172a;padding:20px;border-radius:15px;text-align:center;
+}
+.hobby-box:hover {
+  background: linear-gradient(135deg, #d09228, #1f2937); /* gold to black */
+  color: white;
+  transform: translateY(-5px);
+  transition: 0.3s;
+}
+
+/* ===== HOBBIES ===== */
+.hobbies-grid{
+display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:20px;margin-top:20px;
+}
+.hobby-box{
+background:#0f172a;padding:20px;border-radius:15px;text-align:center;
+}
+.hobby-box:hover {
+  background: linear-gradient(135deg, #d09228, #1f2937); /* gold to black */
+  color: white;
+  transform: translateY(-5px);
+  transition: 0.3s;
+}
+
+/* ===== SECTION COLORS ===== */
+#about{border-left:8px solid #3b82f6;}
+#education{border-left:8px solid #10b981;}
+#projects{border-left:8px solid #2b34d7;}
+#skills{border-left:8px solid #8b5cf6;}
+#hobbies{border-left:8px solid #f59e0b;}
+#contact{border-left:8px solid #06b6d4;}
+
+/* ===== BACK HOME BUTTON ===== */
+.home-btn{
+  position: fixed;
+  top: 100px;  /* move from top to bottom */
+  left: 120px;   /* appear at bottom-right corner */
+  background: #38bdf8;
+  color: #0f172a;
+  padding: 12px 18px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+  z-index: 999;
+  display: none; /* hide by default */
+}
+
+/* Show button only when target section is active */
+.task-output:target .home-btn,
+.task-code:target .home-btn {
+  display: block;
+}
+</style>
+</head>
+
+<body>
+
+<input type="checkbox" id="menu-toggle">
+<label for="menu-toggle" class="menu-btn">☰</label>
+
+<div class="sidebar">
+<img src="scholpc.jpg">
+<h2>Imari Jane Gueco</h2>
+<p>BS Information Technology</p>
+
+<nav>
+<a href="#about">About</a>
+<a href="#education">Education</a>
+<a href="#projects">Projects</a>
+<a href="#skills">Skills</a>
+<a href="#hobbies">Hobbies</a>
+<a href="#contact">Contact</a>
+</nav>
+</div>
+
+<div class="main-content">
+
+<div class="header">PORTFOLIO</div>
+
+<!-- ABOUT -->
+<section id="about">
+<div class="section-card">
+<h1>About Me</h1>
+<p>I'm someone who enjoys my own company and finds comfort in quiet moments. Listening to music is one of my favorite ways to relax and reflect it inspires me and helps me focus. I appreciate simplicity and the little things that make life meaningful.</p>
+</div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+<div class="section-card">
+<h1>Education</h1>
+<ul>
+<li>Pampanga State Agricultural University</li>
+<li>Caluluan National High School</li>
+<li>Bantog Elementary School</li>
+</ul>
+</div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+<div class="section-card">
+<h1>Projects</h1>
+<div class="project-grid">
+
+<!-- Tasks 1 to 6 -->
+<div class="project-card">
+<h3>Task1: Resume</h3>
+<p>This project is a simple resume webpage created using HTML. It shows
+personal information, education, and skills in a clean and organized
+layout</p>
+<div class="btn-group">
+<a href="#task1" class="task-btn">Output</a>
+<a href="#code1" class="task-btn">Code</a>
+<a href="Task1 Resume.html" class="task-btn">Actual</a>
+</div>
+</div>
+
+<div class="project-card">
+<h3>Task2: List Exercise</h3>
+<p>This webpage demonstrates the use of nested lists in HTML. Main items are organized with sub-items nested beneath them.</p>
+<div class="btn-group">
+<a href="#task2" class="task-btn">Output</a>
+<a href="#code2" class="task-btn">Code</a>
+<a href="Task2 list.html" class="task-btn">Actual</a>
+</div>
+</div>
+
+<div class="project-card">
+<h3>Task3: Image Map</h3>
+<p>This webpage demonstrates an image map in HTML with clickable areas that link to different pages.</p>
+<div class="btn-group">
+<a href="#task3" class="task-btn">Output</a>
+<a href="#code3" class="task-btn">Code</a>
+<a href="Task3 image_map.html" class="task-btn">Actual</a>
+</div>
+</div>
+
+<div class="project-card">
+<h3>Task4: Table Layout</h3>
+<p>This webpage demonstrates an HTML form that allows users to enter information such as name, email, and messages</p>
+<div class="btn-group">
+<a href="#task4" class="task-btn">Output</a>
+<a href="#code4" class="task-btn">Code</a>
+<a href="Task4 form.html" class="task-btn">Actual</a>
+</div>
+</div>
+
+<div class="project-card">
+<h3>Task5: Styled Resume</h3>
+<p>This webpage shows improvements made to my resume using CSS. Colors, fonts, and layout have been enhanced for a modern and organized look.</p>
+<div class="btn-group">
+<a href="#task5" class="task-btn">Output</a>
+<a href="#code5" class="task-btn">Code</a>
+<a href="Task5_applying Css.html" class="task-btn">Actual</a>
+</div>
+</div>
+
+<div class="project-card">
+<h3>Task6: Using CSS Display Property</h3>
+<p>This webpage demonstrates the use of the CSS display property to arrange elements.</p>
+<div class="btn-group">
+<a href="#task6" class="task-btn">Output</a>
+<a href="#code6" class="task-btn">Code</a>
+<a href="Task6_Using CSS display property.html" class="task-btn">Actual</a>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- TASK OUTPUT SECTIONS -->
+<section id="task1" class="task-output">
+<a href="#projects" class="home-btn">⬅ Home</a>
+<div class="section-card" style="text-align:center">
+<h1>Task1 Output</h1>
+<img src="Task1result.jpeg" style="max-width:90%;border-radius:15px;margin-top:20px;">
+</div>
+</section>
+
+<section id="task2" class="task-output">
+<a href="#projects" class="home-btn">⬅ Home</a>
+<div class="section-card" style="text-align:center">
+<h1>Task2 Output</h1>
+<img src="Task2result.jpeg" style="max-width:90%;border-radius:15px;margin-top:20px;">
+</div>
+</section>
+
+<section id="task3" class="task-output">
+<a href="#projects" class="home-btn">⬅ Home</a>
+<div class="section-card" style="text-align:center">
+<h1>Task3 Output</h1>
+<img src="Task3result.jpeg" style="max-width:90%;border-radius:15px;margin-top:20px;">
+</div>
+</section>
+
+<section id="task4" class="task-output">
+<a href="#projects" class="home-btn">⬅ Home</a>
+<div class="section-card" style="text-align:center">
+<h1>Task4 Output</h1>
+<img src="Task4result.jpeg" style="max-width:90%;border-radius:15px;margin-top:20px;">
+</div>
+</section>
+
+<section id="task5" class="task-output">
+<a href="#projects" class="home-btn">⬅ Home</a>
+<div class="section-card" style="text-align:center">
+<h1>Task5 Output</h1>
+<img src="Task5result.jpeg" style="max-width:90%;border-radius:15px;margin-top:20px;">
+</div>
+</section>
+
+<section id="task6" class="task-output">
+<a href="#projects" class="home-btn">⬅ Home</a>
+<div class="section-card" style="text-align:center">
+<h1>Task6 Output</h1>
+<img src="Task6result.jpeg" style="max-width:90%;border-radius:15px;margin-top:20px;">
+</div>
+</section>
+
+<!-- TASK CODE SECTIONS -->
+<section id="code1" class="task-code">
+<a href="#projects" class="home-btn">⬅ Home</a>
+<div class="section-card" style="white-space: pre-wrap;overflow-x:auto">
+<h1>Task1 Code</h1>
+<img src="code1.png" style="max-width:100%;border-radius:15px;margin-top:20px;">
+</div>
+</section>
+
+<section id="code2" class="task-code">
+<a href="#projects" class="home-btn">⬅ Home</a>
+<div class="section-card" style="white-space: pre-wrap;overflow-x:auto">
+<h1>Task2 Code</h1>
+<img src="code2.png" style="max-width:100%;border-radius:15px;margin-top:20px;">
+</div>
+</section>
+
+<section id="code3" class="task-code">
+<a href="#projects" class="home-btn">⬅ Home</a>
+<div class="section-card" style="white-space: pre-wrap;overflow-x:auto">
+<h1>Task3 Code</h1>
+<img src="code3.png" style="max-width:100%;border-radius:15px;margin-top:20px;">
+</div>
+</section>
+
+<section id="code4" class="task-code">
+<a href="#projects" class="home-btn">⬅ Home</a>
+<div class="section-card" style="white-space: pre-wrap;overflow-x:auto">
+<h1>Task4 Code</h1>
+<img src="code4.png" style="max-width:100%;border-radius:15px;margin-top:20px;">
+</div>
+</section>
+
+<section id="code5" class="task-code">
+<a href="#projects" class="home-btn">⬅ Home</a>
+<div class="section-card" style="white-space: pre-wrap;overflow-x:auto">
+<h1>Task5 Code</h1>
+<img src="code5.png" style="max-width:100%;border-radius:15px;margin-top:20px;">
+</div>
+</section>
+
+<section id="code6" class="task-code">
+<a href="#projects" class="home-btn">⬅ Home</a>
+<div class="section-card" style="white-space: pre-wrap;overflow-x:auto">
+<h1>Task6 Code</h1>
+<img src="code6.png" style="max-width:100%;border-radius:15px;margin-top:20px;">
+</div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+<div class="section-card">
+<h1>Skills</h1>
+<div class="skills-grid">
+<div class="skill-box">HTML</div>
+<div class="skill-box">CSS</div>
+<div class="skill-box">JavaScript</div>
+</div>
+</div>
+</section>
+
+<!-- HOBBIES -->
+<section id="hobbies">
+<div class="section-card">
+<h1>Hobbies</h1>
+<div class="hobbies-grid">
+<div class="hobby-box">Gaming</div>
+<div class="hobby-box">Watching K-Drama</div>
+<div class="hobby-box">Listening to Music</div>
+</div>
+</div>
+</section>
+
+<!-- CONTACT -->
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-card">
+    <h1>Contact Me</h1>
+    <div class="contact-grid">
+      <div class="contact-box">
+        <span class="contact-icon">📧</span>
+        <h3>Email</h3>
+        <p>ijgueco0932@iskwela.psau.edu.ph</p>
+      </div>
+      <div class="contact-box">
+        <span class="contact-icon">📞</span>
+        <h3>Phone</h3>
+        <p>+63 989 748 8932</p>
+      </div>
+      <div class="contact-box">
+        <span class="contact-icon">📍</span>
+        <h3>Location</h3>
+        <p>Pampanga, Philippines</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
+
+
+
+
+
+
